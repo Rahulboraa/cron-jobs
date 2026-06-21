@@ -43,7 +43,20 @@ jobs:
           git add data/status.json data/history.json
           if git diff --staged --quiet; then
             echo "No status changes to commit."
-          else
-            git commit -m "chore: update keep-alive status [skip ci]"
-            git push
+            exit 0
           fi
+          git commit -m "chore: update keep-alive status [skip ci]"
+
+          # A concurrent push (e.g. a manual edit) can move the branch ahead of us
+          # between checkout and push. Rebase onto the latest remote and retry so the
+          # run self-heals instead of failing red. Our data files always win on conflict.
+          for attempt in 1 2 3 4 5; do
+            if git push; then
+              echo "Pushed on attempt $attempt."
+              exit 0
+            fi
+            echo "Push rejected (attempt $attempt); rebasing onto origin/${GITHUB_REF_NAME} and retrying."
+            git pull --rebase -X ours origin "${GITHUB_REF_NAME}"
+          done
+          echo "::error::Failed to push status update after 5 attempts."
+          exit 1
