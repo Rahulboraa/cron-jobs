@@ -1,33 +1,33 @@
 {
-  "generatedAt": "2026-06-21T09:12:04Z",
+  "generatedAt": "2026-06-21T04:06:37.183Z",
   "schedule": "*/10 * * * *",
   "services": {
     "portfolio-api": {
-      "lastPingAt": "2026-06-21T09:12:01Z",
-      "ok": true,
-      "statusCode": 200,
-      "latencyMs": 213,
-      "error": null,
-      "totalPings": 9412,
-      "consecutiveFailures": 0
+      "lastPingAt": "2026-06-21T04:06:36.963Z",
+      "ok": false,
+      "statusCode": 400,
+      "latencyMs": 12458,
+      "error": "HTTP 400",
+      "totalPings": 9413,
+      "consecutiveFailures": 1
     },
     "blog-backend": {
-      "lastPingAt": "2026-06-21T09:12:02Z",
-      "ok": true,
-      "statusCode": 200,
-      "latencyMs": 184,
-      "error": null,
-      "totalPings": 9410,
-      "consecutiveFailures": 0
+      "lastPingAt": "2026-06-21T04:06:37.066Z",
+      "ok": false,
+      "statusCode": 404,
+      "latencyMs": 102,
+      "error": "HTTP 404",
+      "totalPings": 9411,
+      "consecutiveFailures": 1
     },
     "side-project": {
-      "lastPingAt": "2026-06-21T09:12:04Z",
+      "lastPingAt": "2026-06-21T04:06:37.182Z",
       "ok": false,
-      "statusCode": null,
-      "latencyMs": null,
-      "error": "Timed out after 30000ms",
-      "totalPings": 8120,
-      "consecutiveFailures": 3
+      "statusCode": 503,
+      "latencyMs": 116,
+      "error": "HTTP 503",
+      "totalPings": 8121,
+      "consecutiveFailures": 4
     }
   }
 }
