@@ -13,7 +13,7 @@ const TARGETS = join(ROOT, "config", "targets.json");
 const STATUS = join(ROOT, "data", "status.json");
 const HISTORY = join(ROOT, "data", "history.json");
 
-const TIMEOUT_MS = 30_000; // Render cold starts can take ~50s; 30s is a fair "awake?" probe
+const TIMEOUT_MS = 60_000; // Render free-tier cold starts can take ~50s; allow headroom so a waking service isn't falsely reported down
 const HISTORY_CAP = 60; // keep the last 60 pings per service
 const DUE_SLACK_MS = 90_000; // cron jitter: treat "almost due" as due so a 10m target isn't skipped to 20m
 const FORCE = process.argv.includes("--force") || process.env.FORCE === "true";
