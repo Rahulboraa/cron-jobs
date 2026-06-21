@@ -1,35 +1,11 @@
 {
   "services": [
     {
-      "id": "portfolio-api",
-      "name": "Portfolio API",
-      "url": "https://portfolio-api.onrender.com",
+      "id": "oxgn-csa",
+      "name": "OXGN CSA",
+      "url": "https://oxgn-csa-latest.onrender.com",
       "intervalMinutes": 10,
       "enabled": true,
-      "expectStatus": null
-    },
-    {
-      "id": "blog-backend",
-      "name": "Blog backend",
-      "url": "https://blog-backend.onrender.com/health",
-      "intervalMinutes": 10,
-      "enabled": true,
-      "expectStatus": 200
-    },
-    {
-      "id": "side-project",
-      "name": "Side project",
-      "url": "https://side-project.onrender.com",
-      "intervalMinutes": 10,
-      "enabled": true,
-      "expectStatus": null
-    },
-    {
-      "id": "staging-demo",
-      "name": "Staging demo",
-      "url": "https://staging-demo.onrender.com",
-      "intervalMinutes": 30,
-      "enabled": false,
       "expectStatus": null
     }
   ]
