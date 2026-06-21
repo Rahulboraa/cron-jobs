@@ -1,0 +1,49 @@
+name: keep-awake
+
+on:
+  schedule:
+    # Every 10 minutes (UTC). GitHub may delay scheduled runs under load.
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
+    inputs:
+      force:
+        description: "Ping every enabled service now, ignoring its interval"
+        type: boolean
+        default: true
+
+# Allow this workflow to commit the updated status files back to the repo.
+permissions:
+  contents: write
+
+# Don't let a slow run overlap the next scheduled one.
+concurrency:
+  group: keep-awake
+  cancel-in-progress: false
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Ping services
+        env:
+          CRON_SCHEDULE: "*/10 * * * *"
+          FORCE: ${{ github.event_name == 'workflow_dispatch' && inputs.force }}
+        run: node scripts/ping.mjs
+
+      - name: Commit results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/status.json data/history.json
+          if git diff --staged --quiet; then
+            echo "No status changes to commit."
+          else
+            git commit -m "chore: update keep-alive status [skip ci]"
+            git push
+          fi

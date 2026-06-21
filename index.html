@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Keepwarm — keep your free-tier services awake</title>
+    <meta
+      name="description"
+      content="A personal keep-alive dashboard. A GitHub Actions cron pings your URLs on a schedule so free-tier hosts never spin down."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/styles.css" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='4' fill='%23667d12'/%3E%3Ccircle cx='16' cy='16' r='9' fill='none' stroke='%23667d12' stroke-width='2' opacity='.5'/%3E%3Ccircle cx='16' cy='16' r='14' fill='none' stroke='%23667d12' stroke-width='2' opacity='.2'/%3E%3C/svg%3E"
+    />
+    <script src="assets/app.js" type="module"></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="topbar__inner">
+        <a class="brand" href="./" aria-label="Keepwarm home">
+          <svg class="brand__mark" viewBox="0 0 32 32" aria-hidden="true">
+            <circle cx="16" cy="16" r="3.5" />
+            <circle class="brand__ring" cx="16" cy="16" r="8.5" />
+            <circle class="brand__ring brand__ring--faint" cx="16" cy="16" r="13.5" />
+          </svg>
+          <span class="brand__name">Keepwarm</span>
+        </a>
+
+        <p class="summary" id="summary" aria-live="polite">
+          <span class="summary__skeleton skeleton" aria-hidden="true"></span>
+        </p>
+
+        <button class="btn btn--ghost btn--icon" id="open-settings" type="button" aria-haspopup="dialog">
+          <svg viewBox="0 0 24 24" aria-hidden="true" class="icon">
+            <path
+              d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z M19.4 13a7.8 7.8 0 0 0 0-2l2-1.6-2-3.4-2.4 1a7.8 7.8 0 0 0-1.7-1l-.4-2.5H10l-.4 2.5a7.8 7.8 0 0 0-1.7 1l-2.4-1-2 3.4L3.6 11a7.8 7.8 0 0 0 0 2l-2 1.6 2 3.4 2.4-1c.5.4 1.1.7 1.7 1l.4 2.5h4l.4-2.5c.6-.3 1.2-.6 1.7-1l2.4 1 2-3.4-2-1.6Z"
+            />
+          </svg>
+          <span class="sr-only">Settings</span>
+        </button>
+      </div>
+    </header>
+
+    <main class="page" id="app">
+      <div class="page__head">
+        <h1 class="page__title">Services</h1>
+        <div class="page__actions">
+          <button class="btn btn--secondary" id="wake-all" type="button">Wake all now</button>
+          <button class="btn btn--primary" id="add-service" type="button">
+            <svg viewBox="0 0 24 24" aria-hidden="true" class="icon"><path d="M12 5v14M5 12h14" /></svg>
+            Add service
+          </button>
+        </div>
+      </div>
+
+      <div class="readonly-note" id="readonly-note" hidden>
+        Read-only. Add a GitHub token in
+        <button class="linkbtn" type="button" data-open-settings>Settings</button>
+        to add, edit, or pause services from here.
+      </div>
+
+      <ul class="services" id="services" aria-label="Tracked services">
+        <!-- skeleton rows, replaced once data loads -->
+        <li class="service service--skeleton"><span class="skeleton skeleton--row"></span></li>
+        <li class="service service--skeleton"><span class="skeleton skeleton--row"></span></li>
+        <li class="service service--skeleton"><span class="skeleton skeleton--row"></span></li>
+      </ul>
+
+      <section class="empty" id="empty" hidden>
+        <svg class="empty__mark" viewBox="0 0 32 32" aria-hidden="true">
+          <circle cx="16" cy="16" r="3.5" />
+          <circle cx="16" cy="16" r="9" />
+          <circle cx="16" cy="16" r="14.5" />
+        </svg>
+        <h2 class="empty__title">Nothing to keep warm yet</h2>
+        <p class="empty__body" id="empty-body">
+          Add the URL of a service you want to keep awake. A scheduled job will ping it every few
+          minutes so it never spins down.
+        </p>
+        <button class="btn btn--primary" type="button" data-add-service>Add your first service</button>
+      </section>
+
+      <footer class="footnote" id="footnote">
+        <span id="foot-engine">Pinged by GitHub Actions</span>
+        <span class="footnote__dot" aria-hidden="true">·</span>
+        <span id="foot-updated">loading…</span>
+      </footer>
+    </main>
+
+    <!-- Add / edit service -->
+    <dialog class="dialog" id="service-dialog">
+      <form method="dialog" id="service-form" class="dialog__form">
+        <h2 class="dialog__title" id="service-dialog-title">Add service</h2>
+        <div class="field">
+          <label for="f-name">Name</label>
+          <input id="f-name" name="name" type="text" required placeholder="Portfolio API" autocomplete="off" />
+        </div>
+        <div class="field">
+          <label for="f-url">URL to ping</label>
+          <input
+            id="f-url"
+            name="url"
+            type="url"
+            required
+            placeholder="https://my-app.onrender.com"
+            autocomplete="off"
+          />
+          <p class="field__hint">A lightweight path like <code>/health</code> is ideal if you have one.</p>
+        </div>
+        <div class="field field--row">
+          <div>
+            <label for="f-interval">Ping every</label>
+            <div class="inputgroup">
+              <input id="f-interval" name="intervalMinutes" type="number" min="5" max="1440" step="5" value="10" required />
+              <span class="inputgroup__suffix">min</span>
+            </div>
+            <p class="field__hint">Render sleeps at ~15 min. 10 is safe.</p>
+          </div>
+          <div>
+            <label for="f-expect">Expect status</label>
+            <input id="f-expect" name="expectStatus" type="number" min="100" max="599" placeholder="any 2xx/3xx" />
+            <p class="field__hint">Leave blank to accept any success.</p>
+          </div>
+        </div>
+        <p class="dialog__error" id="service-error" hidden></p>
+        <div class="dialog__actions">
+          <button class="btn btn--ghost" type="button" data-close>Cancel</button>
+          <button class="btn btn--primary" type="submit" id="service-save">Add service</button>
+        </div>
+      </form>
+    </dialog>
+
+    <!-- Settings -->
+    <dialog class="dialog" id="settings-dialog">
+      <form method="dialog" id="settings-form" class="dialog__form">
+        <h2 class="dialog__title">Settings</h2>
+        <p class="dialog__lead">
+          To add, edit, or pause services from this page, Keepwarm commits to
+          <code id="settings-repo">your repo</code> using a GitHub token. The token is stored only in
+          this browser (<code>localStorage</code>) and never leaves it except in requests to
+          github.com.
+        </p>
+        <div class="field">
+          <label for="f-token">GitHub token</label>
+          <input id="f-token" name="token" type="password" placeholder="github_pat_… or ghp_…" autocomplete="off" />
+          <p class="field__hint">
+            Fine-grained token with <strong>Contents: Read and write</strong> on this repo only.
+          </p>
+        </div>
+        <details class="advanced">
+          <summary>Repository (auto-detected)</summary>
+          <div class="field field--row">
+            <div>
+              <label for="f-owner">Owner</label>
+              <input id="f-owner" name="owner" type="text" autocomplete="off" />
+            </div>
+            <div>
+              <label for="f-repo">Repo</label>
+              <input id="f-repo" name="repo" type="text" autocomplete="off" />
+            </div>
+            <div>
+              <label for="f-branch">Branch</label>
+              <input id="f-branch" name="branch" type="text" autocomplete="off" placeholder="main" />
+            </div>
+          </div>
+        </details>
+        <div class="dialog__actions dialog__actions--split">
+          <button class="btn btn--ghost btn--danger" type="button" id="clear-token">Remove token</button>
+          <div>
+            <button class="btn btn--ghost" type="button" data-close>Cancel</button>
+            <button class="btn btn--primary" type="submit">Save settings</button>
+          </div>
+        </div>
+      </form>
+    </dialog>
+
+    <div class="toasts" id="toasts" aria-live="polite" aria-atomic="false"></div>
+  </body>
+</html>

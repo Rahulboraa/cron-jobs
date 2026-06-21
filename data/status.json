@@ -1,0 +1,33 @@
+{
+  "generatedAt": "2026-06-21T09:12:04Z",
+  "schedule": "*/10 * * * *",
+  "services": {
+    "portfolio-api": {
+      "lastPingAt": "2026-06-21T09:12:01Z",
+      "ok": true,
+      "statusCode": 200,
+      "latencyMs": 213,
+      "error": null,
+      "totalPings": 9412,
+      "consecutiveFailures": 0
+    },
+    "blog-backend": {
+      "lastPingAt": "2026-06-21T09:12:02Z",
+      "ok": true,
+      "statusCode": 200,
+      "latencyMs": 184,
+      "error": null,
+      "totalPings": 9410,
+      "consecutiveFailures": 0
+    },
+    "side-project": {
+      "lastPingAt": "2026-06-21T09:12:04Z",
+      "ok": false,
+      "statusCode": null,
+      "latencyMs": null,
+      "error": "Timed out after 30000ms",
+      "totalPings": 8120,
+      "consecutiveFailures": 3
+    }
+  }
+}
