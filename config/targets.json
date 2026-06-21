@@ -7,6 +7,14 @@
       "intervalMinutes": 10,
       "enabled": true,
       "expectStatus": null
+    },
+    {
+      "id": "oxgn-csa-api",
+      "name": "OXGN CSA API",
+      "url": "https://oxgn-csa-api-latest.onrender.com",
+      "intervalMinutes": 10,
+      "enabled": true,
+      "expectStatus": null
     }
   ]
 }
