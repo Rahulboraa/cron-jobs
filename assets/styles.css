@@ -288,6 +288,14 @@ code {
 .btn--danger:hover {
   background: var(--down-tint);
 }
+.btn--danger-solid {
+  --bg-btn: var(--down);
+  color: oklch(0.99 0.01 27);
+  box-shadow: var(--shadow-sm);
+}
+.btn--danger-solid:hover {
+  --bg-btn: oklch(0.49 0.2 27);
+}
 .btn--icon {
   width: 38px;
   padding: 0;
@@ -743,6 +751,9 @@ code {
 .dialog::backdrop {
   background: oklch(0.3 0.02 118 / 0.34);
   backdrop-filter: blur(2px);
+}
+.dialog--confirm {
+  width: min(420px, calc(100vw - 32px));
 }
 .dialog[open] {
   animation: dialog-in var(--t-mid) var(--ease);

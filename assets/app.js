@@ -371,7 +371,12 @@ async function toggleService(id, enabled) {
 
 async function deleteService(id) {
   const svc = state.targets.find((s) => s.id === id);
-  if (!confirm(`Remove "${svc.name}"? It will no longer be kept awake.`)) return;
+  const confirmed = await confirmAction({
+    title: `Remove ${svc.name}?`,
+    message: `It will stop being kept awake and disappear from this dashboard. This edits config/targets.json in your repo.`,
+    confirmLabel: "Remove service",
+  });
+  if (!confirmed) return;
   state.targets = state.targets.filter((s) => s.id !== id);
   state.openIds.delete(id);
   render();
@@ -502,6 +507,21 @@ $$("dialog").forEach((d) =>
     if (e.target === d) d.close();
   })
 );
+
+/* ---------------------------------------------------------------- confirm */
+const confirmDialog = $("#confirm-dialog");
+function confirmAction({ title, message, confirmLabel = "Remove" }) {
+  $("#confirm-title").textContent = title;
+  $("#confirm-message").textContent = message;
+  $("#confirm-ok").textContent = confirmLabel;
+  confirmDialog.showModal();
+  $('[value="cancel"]', confirmDialog).focus(); // safe default for a destructive action
+  return new Promise((resolve) => {
+    confirmDialog.addEventListener("close", () => resolve(confirmDialog.returnValue === "confirm"), {
+      once: true,
+    });
+  });
+}
 
 /* ---------------------------------------------------------------- toast */
 let toastTimer;

@@ -63,7 +63,7 @@
       <div class="readonly-note" id="readonly-note" hidden>
         Read-only. Add a GitHub token in
         <button class="linkbtn" type="button" data-open-settings>Settings</button>
-        to add, edit, or pause services from here.
+        to add, edit, pause, or remove services from here.
       </div>
 
       <ul class="services" id="services" aria-label="Tracked services">
@@ -177,6 +177,18 @@
             <button class="btn btn--ghost" type="button" data-close>Cancel</button>
             <button class="btn btn--primary" type="submit">Save settings</button>
           </div>
+        </div>
+      </form>
+    </dialog>
+
+    <!-- Confirm destructive actions -->
+    <dialog class="dialog dialog--confirm" id="confirm-dialog">
+      <form method="dialog" class="dialog__form">
+        <h2 class="dialog__title" id="confirm-title">Remove service?</h2>
+        <p class="dialog__lead" id="confirm-message"></p>
+        <div class="dialog__actions">
+          <button class="btn btn--ghost" value="cancel" type="submit">Cancel</button>
+          <button class="btn btn--danger-solid" value="confirm" type="submit" id="confirm-ok">Remove</button>
         </div>
       </form>
     </dialog>
