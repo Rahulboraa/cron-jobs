@@ -1,33 +1,15 @@
 {
-  "generatedAt": "2026-06-21T04:06:37.183Z",
+  "generatedAt": "2026-06-21T04:11:25.767Z",
   "schedule": "*/10 * * * *",
   "services": {
-    "portfolio-api": {
-      "lastPingAt": "2026-06-21T04:06:36.963Z",
-      "ok": false,
-      "statusCode": 400,
-      "latencyMs": 12458,
-      "error": "HTTP 400",
-      "totalPings": 9413,
-      "consecutiveFailures": 1
-    },
-    "blog-backend": {
-      "lastPingAt": "2026-06-21T04:06:37.066Z",
-      "ok": false,
-      "statusCode": 404,
-      "latencyMs": 102,
-      "error": "HTTP 404",
-      "totalPings": 9411,
-      "consecutiveFailures": 1
-    },
-    "side-project": {
-      "lastPingAt": "2026-06-21T04:06:37.182Z",
-      "ok": false,
-      "statusCode": 503,
-      "latencyMs": 116,
-      "error": "HTTP 503",
-      "totalPings": 8121,
-      "consecutiveFailures": 4
+    "oxgn-csa": {
+      "lastPingAt": "2026-06-21T04:11:25.766Z",
+      "ok": true,
+      "statusCode": 200,
+      "latencyMs": 224,
+      "error": null,
+      "totalPings": 1,
+      "consecutiveFailures": 0
     }
   }
 }
