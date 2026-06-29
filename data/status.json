@@ -1,23 +1,23 @@
 {
-  "generatedAt": "2026-06-29T13:49:50.944Z",
+  "generatedAt": "2026-06-29T16:50:17.137Z",
   "schedule": "*/10 * * * *",
   "services": {
     "oxgn-csa": {
-      "lastPingAt": "2026-06-29T13:49:50.769Z",
+      "lastPingAt": "2026-06-29T16:50:16.801Z",
       "ok": true,
       "statusCode": 200,
-      "latencyMs": 174,
+      "latencyMs": 204,
       "error": null,
-      "totalPings": 87,
+      "totalPings": 88,
       "consecutiveFailures": 0
     },
     "oxgn-csa-api": {
-      "lastPingAt": "2026-06-29T13:49:50.944Z",
+      "lastPingAt": "2026-06-29T16:50:17.137Z",
       "ok": true,
       "statusCode": 200,
-      "latencyMs": 173,
+      "latencyMs": 335,
       "error": null,
-      "totalPings": 86,
+      "totalPings": 87,
       "consecutiveFailures": 0
     }
   }
