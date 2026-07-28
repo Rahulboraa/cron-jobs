@@ -1,24 +1,24 @@
 {
-  "generatedAt": "2026-07-28T12:15:15.023Z",
+  "generatedAt": "2026-07-28T14:44:59.929Z",
   "schedule": "*/10 * * * *",
   "services": {
     "oxgn-csa": {
-      "lastPingAt": "2026-07-28T12:15:14.754Z",
+      "lastPingAt": "2026-07-28T14:44:59.781Z",
       "ok": false,
       "statusCode": 503,
-      "latencyMs": 246,
+      "latencyMs": 203,
       "error": "HTTP 503",
-      "totalPings": 459,
-      "consecutiveFailures": 222
+      "totalPings": 460,
+      "consecutiveFailures": 223
     },
     "oxgn-csa-api": {
-      "lastPingAt": "2026-07-28T12:15:15.023Z",
+      "lastPingAt": "2026-07-28T14:44:59.929Z",
       "ok": false,
       "statusCode": 503,
-      "latencyMs": 268,
+      "latencyMs": 147,
       "error": "HTTP 503",
-      "totalPings": 458,
-      "consecutiveFailures": 222
+      "totalPings": 459,
+      "consecutiveFailures": 223
     }
   }
 }
