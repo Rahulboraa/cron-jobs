@@ -1,12 +1,6 @@
 {
   "oxgn-csa": [
     {
-      "t": "2026-11-02T18:45:41.715Z",
-      "ok": false,
-      "code": null,
-      "ms": null
-    },
-    {
       "t": "2026-11-03T01:20:59.948Z",
       "ok": false,
       "code": null,
@@ -359,15 +353,15 @@
       "ok": false,
       "code": null,
       "ms": null
-    }
-  ],
-  "oxgn-csa-api": [
+    },
     {
-      "t": "2026-11-02T18:46:41.717Z",
+      "t": "2026-11-18T12:57:06.231Z",
       "ok": false,
       "code": null,
       "ms": null
-    },
+    }
+  ],
+  "oxgn-csa-api": [
     {
       "t": "2026-11-03T01:21:59.948Z",
       "ok": false,
@@ -718,6 +712,12 @@
     },
     {
       "t": "2026-11-18T03:59:50.950Z",
+      "ok": false,
+      "code": null,
+      "ms": null
+    },
+    {
+      "t": "2026-11-18T12:58:06.233Z",
       "ok": false,
       "code": null,
       "ms": null
